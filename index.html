@@ -314,27 +314,35 @@ img.addEventListener("load", () => {
     if (m.prova === "carico") el.classList.add("prova-carico");
     if (m.prova === "sonica") el.classList.add("prova-sonica");
 
-    el.addEventListener("mouseenter", () => {
-      tooltip.innerHTML = `
-        <div><strong>${m.id}</strong></div>
-        <a href="${m.pdf}" target="_blank">📄 Elaborato Progettuale</a>
-        <a href="Qualità/${m.id.replace(' ', '_')}_QLT.pdf" target="_blank">🟠 Documento Qualità (QLT)</a>
-      `;
-      tooltip.style.left = leftPercent + "%";
-      tooltip.style.top = topPercent + "%";
-      tooltip.style.display = "block";
-    });
+   let hideTimeout;
 
-    el.addEventListener("mouseleave", () => {
-      tooltip.style.display = "none";
-    });
+el.addEventListener("mouseenter", () => {
+  clearTimeout(hideTimeout);
+  tooltip.innerHTML = `
+    <div><strong>${m.id}</strong></div>
+    <a href="${m.pdf}" target="_blank">📄 Elaborato Progettuale</a>
+    <a href="Qualità/${m.id.replace(' ', '_')}_QLT.pdf" target="_blank">🟠 Documento Qualità (QLT)</a>
+  `;
+  tooltip.style.left = leftPercent + "%";
+  tooltip.style.top = topPercent + "%";
+  tooltip.style.display = "block";
+});
 
-    el.addEventListener("click", () => {
-      if (selectedMarker) selectedMarker.classList.remove("selected");
-      el.classList.add("selected");
-      selectedMarker = el;
-      if (m.pdf) window.open(m.pdf, "_blank");
-    });
+el.addEventListener("mouseleave", () => {
+  hideTimeout = setTimeout(() => {
+    tooltip.style.display = "none";
+  }, 200); // ritardo per permettere il passaggio al tooltip
+});
+
+tooltip.addEventListener("mouseenter", () => {
+  clearTimeout(hideTimeout);
+  tooltip.style.display = "block";
+});
+
+tooltip.addEventListener("mouseleave", () => {
+  tooltip.style.display = "none";
+});
+
     
     map.appendChild(el);
   });
