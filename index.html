@@ -84,6 +84,7 @@
       pointer-events: none;
     }
 
+    /* 🔥 PULSANTI */
     .legend-button {
       position: fixed;
       top: 20px;
@@ -100,10 +101,12 @@
       user-select: text;
     }
 
+    /* 🔥 LEGENDA ANCORATA AL PULSANTE */
     .legend-panel {
-      position: fixed;
-      top: 75px;
-      right: 20px;
+      position: absolute;
+      top: 0;
+      right: 100%;
+      margin-right: 10px;
       width: 240px;
       background: rgba(0,0,0,0.85);
       color: #fff;
@@ -149,20 +152,26 @@
 
 <body>
 
+<!-- 🔥 PULSANTE + LEGENDA -->
 <div class="legend-button" onclick="toggleLegend()">
   Legenda prove sui pali
+
+  <div id="legendPanel" class="legend-panel">
+    <div class="item">
+      <span class="icon">🏋️</span>
+      <span>Prova di carico 1,5×PSE<br><small>Micropalo 157</small></span>
+    </div>
+
+    <div class="item">
+      <span class="icon">📡</span>
+      <span>Prova sonica “cross-hole”<br><small>Pali: 140, 186</small></span>
+    </div>
+  </div>
 </div>
 
-<div id="legendPanel" class="legend-panel">
-  <div class="item">
-    <span class="icon">🏋️</span>
-    <span>Prova di carico 1,5×PSE<br><small>Micropalo 157</small></span>
-  </div>
-
-  <div class="item">
-    <span class="icon">📡</span>
-    <span>Prova sonica “cross-hole”<br><small>Pali: 140, 186</small></span>
-  </div>
+<!-- 🔨 PULSANTE SCAPITOZZATI -->
+<div class="legend-button" onclick="toggleScapitozzati()" style="top: 60px; right: 180px;">
+  ⛏️ Pali scapitozzati
 </div>
 
 <a href="https://gussofrag.github.io/Key-Plant/" class="home-btn">
@@ -182,6 +191,27 @@ function toggleLegend() {
   panel.style.display = (panel.style.display === "block") ? "none" : "block";
 }
 
+let filterScapitozzati = false;
+
+function toggleScapitozzati() {
+  filterScapitozzati = !filterScapitozzati;
+
+  document.querySelectorAll('.marker').forEach(marker => {
+    const isScapitozzato = marker.dataset.scapitozzato === "true";
+
+    if (filterScapitozzati) {
+      if (isScapitozzato) {
+        marker.style.display = "block";
+        marker.classList.add("scapitozzato-attivo");
+      } else {
+        marker.style.display = "none";
+      }
+    } else {
+      marker.style.display = "block";
+      marker.classList.remove("scapitozzato-attivo");
+    }
+  });
+}
 const markers = [
   { id: "Micropalo 115", x: 204, y: 454, pdf: "pdf/MP_115.pdf" },
   { id: "Micropalo 116", x: 405, y: 454, pdf: "pdf/MP_116.pdf" },
