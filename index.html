@@ -348,6 +348,8 @@ img.addEventListener("load", () => {
   markers.forEach(m => {
     const el = document.createElement("div");
     el.className = "marker";
+    el.dataset.scapitozzato = m.scapitozzato ? "true" : "false";
+
 
     const leftPercent = (m.x / imgWidth) * 100;
     const topPercent = (m.y / imgHeight) * 100;
