@@ -64,6 +64,21 @@
       margin: 3px 0;
     }
 
+    /* CROCE ROSSA QUANDO FILTRO ATTIVO */
+    .marker.scapitozzato-attivo::before {
+      content: "✚";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      color: red;
+      font-weight: 900;
+      pointer-events: none;
+      text-shadow: 0 0 4px black, 0 0 6px black, 0 0 8px black;
+      z-index: 9999;
+    }
+    
     .marker.prova-carico::after {
       content: "🏋️";
       position: absolute;
